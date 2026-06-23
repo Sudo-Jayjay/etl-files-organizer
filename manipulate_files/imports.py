@@ -1,6 +1,6 @@
 import shutil
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 import zipfile
 from pathlib import Path
 
