@@ -10,6 +10,9 @@ from manipulate_files.unzip_files import unzip_all
 from manipulate_files.move_files import move_files
 from manipulate_files.unzip_utils import unzip_and_move
 from ingest_files.count_rows import count_lines
+from docs_utils.modify_header import replace_right_header
+from docx import Document
+from manipulate_files.format_date_column import format_date_column
 
 load_dotenv()
 
@@ -39,18 +42,7 @@ DESTINATION_DIR   = os.getenv("DESTINATION_DIR")
     #     source_dir=ZIP_SOURCE_DIR,
     #     extract_dir=EXTRACT_DIR,
     # )
-# def count_lines(filepath: str) -> int:
-#     """Count lines using memory-mapped file access."""
-#     with open(filepath, "rb") as f:
-#         mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-#         count = mm.read().count(b"\n")
-#         mm.close()
-#     return count
-    
-# def count_lines(filepath: str) -> int:
-#     """Count the number of lines in a text file efficiently."""
-#     with open(filepath, "rb") as f:
-#         return sum(1 for _ in f)   
+
 
 def handle_interrupt(sig, frame):
     """Handle keyboard interrupt gracefully."""
@@ -59,27 +51,10 @@ def handle_interrupt(sig, frame):
 
 signal.signal(signal.SIGINT, handle_interrupt)
 
-# def count_lines(filepath: str) -> int:
-#     """Count lines by reading fixed-size chunks to minimize I/O calls."""
-#     count = 0
-#     with open(filepath, "rb") as f:
-#         while chunk := f.read(1024 * 1024):  # read 1MB at a time
-#             count += chunk.count(b"\n")
-#     return count
 
-# def count_lines(filepath: str) -> int:
-#     """Count lines using memory-mapped file access."""
-#     with open(filepath, "rb") as f:
-#         mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-#         count = mm.read().count(b"\n")
-#         mm.close()
-#     return count
 
 
 if __name__ == "__main__":
     # run()
-    file_path = r"S:\NetMgt\Managed Care Analytics\Revenue Applications\DataFeed\Membership\Anthem\Anthem_MA\KYMHPMA_Clinical_Attribution_05092026.txt"
-    file_sample = r"KYMHPMA_Clinical_Attribution_05092026.txt"
-    line_count = count_lines(file_path)
-    print(f"[OK] Total lines: {line_count + 1}")
+    format_date_column(r"C:\Users\VERZ0003\Downloads\dates.xlsx", ["A", "B", "C"])
     print("DONE!")
