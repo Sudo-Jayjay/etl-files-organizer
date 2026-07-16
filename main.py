@@ -13,6 +13,7 @@ from ingest_files.count_rows import count_lines
 from docs_utils.modify_header import replace_right_header
 from docx import Document
 from manipulate_files.format_date_column import format_date_column
+from manipulate_files.compare_rows import compare_rows
 
 load_dotenv()
 
@@ -56,5 +57,7 @@ signal.signal(signal.SIGINT, handle_interrupt)
 
 if __name__ == "__main__":
     # run()
-    format_date_column(r"C:\Users\VERZ0003\Downloads\dates.xlsx", ["A", "B", "C"])
+    # format_date_column(r"C:\Users\VERZ0003\Downloads\dates.xlsx", ["A", "B", "C"])
+    sum = compare_rows(r"C:\Users\VERZ0003\Downloads\dates.xlsx", r"C:\Users\VERZ0003\Downloads\tmp_50_newplans_20260626.xlsx")
+    print(sum)
     print("DONE!")
