@@ -6,5 +6,5 @@ def excess_columns(base_filepath, compare_filepath):
     return [col for col in compare_df_cols if col.strip().lower() not in base_cols]
 
 if __name__ == "__main__":
-    excess = excess_columns(r"C:\Users\VERZ0003\Downloads\DE5500 - Visit Billing Data (02-13-2026).xlsx", r"C:\Users\VERZ0003\Downloads\DE5500 - Visit Billing Data (06-30-2026).xlsx")
+    excess = excess_columns(r"C:\Users\VERZ0003\Downloads\DE5500 - Visit Billing Data (02-13-2026).xlsx", r"\\mdcofs900011\corpshared$\NetMgt\Managed Care Analytics\Revenue Applications\DataFeed\ASC\Compass\DE5500 - Visit Billing Data (07-20-2026).xlsx")
     print("Excess columns:", excess)
