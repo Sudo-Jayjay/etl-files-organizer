@@ -6,14 +6,12 @@ import os
 import signal
 import sys
 from dotenv import load_dotenv
-from manipulate_files.unzip_files import unzip_all
-from manipulate_files.move_files import move_files
-from manipulate_files.unzip_utils import unzip_and_move
-from ingest_files.count_rows import count_lines
-from docs_utils.modify_header import replace_right_header
-from docx import Document
-from manipulate_files.format_date_column import format_date_column
 from manipulate_files.compare_rows import compare_rows
+from ingest_files.traverse_folder import list_files
+from ingest_files.create_table_from_first_column import copy_first_column_and_row
+from ingest_files.ingest_files import csv_to_sql
+
+
 
 load_dotenv()
 
@@ -22,27 +20,6 @@ ZIP_DESTINATION_DIR   = os.getenv("ZIP_DESTINATION_DIR")
 EXTRACT_DIR       = os.getenv("EXTRACT_DIR")
 DESTINATION_DIR   = os.getenv("DESTINATION_DIR")
 
-
-# def run():
-#     # Option 3: Move only (after unzipping separately)
-#     move_files(
-#     source_dir=EXTRACT_DIR, # type: ignore
-#     destination_dir=DESTINATION_DIR, # type: ignore
-#     overwrite=True,
-#     )
-#     # Option 1: Unzip + move in one call
-#     unzip_and_move(
-#         zip_source_dir=ZIP_SOURCE_DIR, # type: ignore
-#         final_destination_dir=ZIP_DESTINATION_DIR, # type: ignore
-#         overwrite=True,
-#         cleanup=True,
-#     )
-
-    # # Option 2: Unzip only
-    # unzip_all(
-    #     source_dir=ZIP_SOURCE_DIR,
-    #     extract_dir=EXTRACT_DIR,
-    # )
 
 
 def handle_interrupt(sig, frame):
@@ -58,6 +35,8 @@ signal.signal(signal.SIGINT, handle_interrupt)
 if __name__ == "__main__":
     # run()
     # format_date_column(r"C:\Users\VERZ0003\Downloads\dates.xlsx", ["A", "B", "C"])
-    sum = compare_rows(r"C:\Users\VERZ0003\Downloads\dates.xlsx", r"C:\Users\VERZ0003\Downloads\tmp_50_newplans_20260626.xlsx")
-    print(sum)
+    conn_str = (
+    f"mssql+pyodbc://{os.getenv('SQL_SERVER')}/{os.getenv('SQL_DATABASE')}"
+    f"?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
+    )
     print("DONE!")
