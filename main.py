@@ -39,4 +39,5 @@ if __name__ == "__main__":
     f"mssql+pyodbc://{os.getenv('SQL_SERVER')}/{os.getenv('SQL_DATABASE')}"
     f"?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
     )
+    
     print("DONE!")

@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 
-TABLE_NAME='config.source_file_profile'
+TABLE_NAME='audit.file_processing_history'
 def run_query(conn_str, query):
     engine = create_engine(conn_str)
     with engine.connect() as conn:
@@ -16,4 +16,4 @@ if __name__ == "__main__":
         f"?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
     )
     rows = run_query(conn_str, f"SELECT * FROM {TABLE_NAME}")
-    print(rows)
+    print(rows[0][1])
