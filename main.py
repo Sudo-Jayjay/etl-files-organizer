@@ -6,14 +6,10 @@ import os
 import signal
 import sys
 from dotenv import load_dotenv
-from manipulate_files.compare_rows import compare_rows
-from ingest_files.traverse_folder import list_files
-from ingest_files.create_table_from_first_column import copy_first_column_and_row
-from ingest_files.ingest_files import csv_to_sql
-
-
+from file_ops import list_files, move_files, unzip_files, delete_zip_files
 
 load_dotenv()
+
 
 ZIP_SOURCE_DIR    = os.getenv("ZIP_SOURCE_DIR")
 ZIP_DESTINATION_DIR   = os.getenv("ZIP_DESTINATION_DIR")
@@ -35,9 +31,9 @@ signal.signal(signal.SIGINT, handle_interrupt)
 if __name__ == "__main__":
     # run()
     # format_date_column(r"C:\Users\VERZ0003\Downloads\dates.xlsx", ["A", "B", "C"])
-    conn_str = (
-    f"mssql+pyodbc://{os.getenv('SQL_SERVER')}/{os.getenv('SQL_DATABASE')}"
-    f"?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
-    )
-    
+    # conn_str = (
+    # f"mssql+pyodbc://{os.getenv('SQL_SERVER')}/{os.getenv('SQL_DATABASE')}"
+    # f"?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
+    # )
+    print(list_files(r"C:\Users\JAYSON\Documents\smm-website\smmpanel_next_js", pattern=r"\.sql"))
     print("DONE!")
