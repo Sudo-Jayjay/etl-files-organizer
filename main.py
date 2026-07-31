@@ -6,17 +6,10 @@ import os
 import signal
 import sys
 from dotenv import load_dotenv
-from file_ops import list_files, move_files, unzip_files, delete_zip_files
+from ingest_files import sql_file_to_excel
+from db import get_conn_str
 
 load_dotenv()
-
-
-ZIP_SOURCE_DIR    = os.getenv("ZIP_SOURCE_DIR")
-ZIP_DESTINATION_DIR   = os.getenv("ZIP_DESTINATION_DIR")
-EXTRACT_DIR       = os.getenv("EXTRACT_DIR")
-DESTINATION_DIR   = os.getenv("DESTINATION_DIR")
-
-
 
 def handle_interrupt(sig, frame):
     """Handle keyboard interrupt gracefully."""
@@ -29,11 +22,5 @@ signal.signal(signal.SIGINT, handle_interrupt)
 
 
 if __name__ == "__main__":
-    # run()
-    # format_date_column(r"C:\Users\VERZ0003\Downloads\dates.xlsx", ["A", "B", "C"])
-    # conn_str = (
-    # f"mssql+pyodbc://{os.getenv('SQL_SERVER')}/{os.getenv('SQL_DATABASE')}"
-    # f"?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
-    # )
-    print(list_files(r"C:\Users\JAYSON\Documents\smm-website\smmpanel_next_js", pattern=r"\.sql"))
+    sql_file_to_excel(get_conn_str('Mgd_Care_Reporting'), r"C:\etl-files-organizer\sql_scripts\weekly_plan_index.sql", r"C:\Users\VERZ0003\OneDrive - Bon Secours Mercy Health\Documents\arrived_files")
     print("DONE!")
