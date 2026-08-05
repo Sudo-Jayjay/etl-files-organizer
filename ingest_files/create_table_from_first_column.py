@@ -12,7 +12,7 @@ def create_table_from_first_column(source_table, target_table, source_conn_str, 
     inspector = inspect(source_engine)
     columns = inspector.get_columns(source_table)  # [{'name': ..., 'type': ...}, ...]
  
-    df = pd.read_sql(f"SELECT TOP 1 * FROM {source_table}", source_engine)
+    df = pd.read_sql(f"SELECT TOP 20 * FROM {source_table}", source_engine)
  
     column_defs = ", ".join(f"[{col['name']}] NVARCHAR(MAX)" for col in columns)
     with target_engine.connect() as conn:

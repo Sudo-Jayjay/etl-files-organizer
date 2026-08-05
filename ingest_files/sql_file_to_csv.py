@@ -5,8 +5,9 @@ from sqlalchemy import create_engine, text
 
 STATEMENT_KEYWORDS = r"DROP|SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|TRUNCATE|WITH|MERGE|EXEC"
 
-def sql_file_to_csv(conn_str, sql_filepath, output_folder):
+def sql_file_to_csv(conn_str, sql_filepath, output_folder, delimiter=None):
     os.makedirs(output_folder, exist_ok=True)
+    separator = delimiter or ','
 
     engine = create_engine(conn_str)
     with open(sql_filepath) as f:
@@ -25,7 +26,7 @@ def sql_file_to_csv(conn_str, sql_filepath, output_folder):
             if is_query:
                 df = pd.read_sql(text(stmt), conn)
                 csv_count += 1
-                df.to_csv(f"{output_folder}/output_{csv_count}.csv", index=False)
+                df.to_csv(f"{output_folder}/output_{csv_count}.csv", sep=separator, index=False)
             else:
                 conn.execute(text(stmt))
         conn.commit()
